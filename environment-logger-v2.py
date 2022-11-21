@@ -65,7 +65,7 @@ def get_data_points():
     f = open("TempData.txt", "a")
     print(data, file=f)
     f.close()
-    print(data)
+    # print(data)
     return data
 
 x = 10
@@ -74,6 +74,7 @@ while x > 1:
         get_data_points()
         #df = pd.DataFrame(get_data_points())
         #df.to_csv('TempData.txt', header=None, index=None, sep='\t', mode='a')
-        time.sleep(900)        
+        # Add data to SQLite
+        time.sleep(1)        
     except:
         print("Something went terribly wrong...")     
