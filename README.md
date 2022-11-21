@@ -1,2 +1,6 @@
 # environment-monitor
-Full stack app to log temperature and other environment data using a raspberry pi, a database, and react 
+Full stack app to log temperature and other environment data using a raspberry pi, a database, and react.
+
+Insert data flow figure
+
+Demo: 
