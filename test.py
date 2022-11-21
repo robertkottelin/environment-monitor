@@ -44,4 +44,4 @@ def get_database():
 while True:
 	print(read_temp())	
 	get_database()
-	time.sleep(1)
+	#time.sleep(1)
