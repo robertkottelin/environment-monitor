@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { makeStyles } from "@material-ui/core";
+import "./App.css";
+import { BrowserRouter, Route } from "react-router-dom";
+
+const useStyles = makeStyles(() => ({
+  App: {
+    backgroundColor: "#14161a",
+    color: "white",
+    minHeight: "100vh",
+  },
+}));
 
 function App() {
+  const classes = useStyles();
 
-  console.log("get_tempdata()")
   return (
-    <div className="App">
-      <button>
-        Initialize temperature tracking
-      </button>
-      <header className="App-header">
-        <p>
-          get_tempdata()
-        </p>
-        <p>
-          get_tempdata()
-        </p>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className={classes.App}>
+      </div>
+      <Alert />
+    </BrowserRouter>
   );
 }
 
