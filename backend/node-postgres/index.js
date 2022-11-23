@@ -1,7 +1,9 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const { Client } = require("pg");
+
+const app = express();
 const port = 3001
-const merchant_model = require('./temperature_model')
+
 app.use(express.json())
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -10,16 +12,40 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/', (req, res) => {
-  merchant_model.getTemperatures()
+
+const client = new Client({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'temperaturedb',
+  password: 'password',
+  port: 5432
+});
+
+client.connect();
+
+const getTemperatures = () => {
+  return new Promise(function(resolve, reject) {
+    client.query('SELECT * FROM temperatures', (error, results) => {
+      if (error) {
+        reject(error)
+      }
+      resolve(results.rows);
+    })
+  }) 
+}
+
+app.get("/api", (req, res) => {
+  getTemperatures()
   .then(response => {
     res.status(200).send(response);
   })
   .catch(error => {
     res.status(500).send(error);
   })
-})
+  res.json({ message: "Hello from server!" });
+});
+
 
 app.listen(port, () => {
-  console.log(`App running on port ${port}.`)
+  console.log(`Listening on port ${port}`)
 })

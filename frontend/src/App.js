@@ -1,42 +1,25 @@
-import { makeStyles } from "@material-ui/core";
+// import { makeStyles } from "@material-ui/core";
 import "./App.css";
-import Header from "./Header";
+// import Header from "./Header";
 import React, {useState, useEffect} from 'react';
 
-const useStyles = makeStyles(() => ({
-  App: {
-    backgroundColor: "black",
-    color: "white",
-    alignItems: "center",
-    alignText: "center",
-    justifyContent: "center",
-  },
-}));
-
 function App() {
-  const classes = useStyles();
-  const [temperatures, setTemperatures] = useState(false);
+  const [data, setData] = React.useState(null);
 
-  useEffect(() => {
-    getTemperatures();
+  React.useEffect(() => {
+    fetch("/api")
+      .then((res) => res.json())
+      .then((data) => setData(data.message));
+      // console.log(data.message)
   }, []);
 
-  function getTemperatures() {
-    fetch('http://localhost:3001')
-      .then(response => {
-        return response.text();
-      })
-      .then(data => {
-        setTemperatures(data);
-      });
-  }
-
   return (
-    <div className={classes.App}>
-      {temperatures ? temperatures : 'There is no temperature data available'}
+    <div className="App">
+      <header className="App-header">
+        <p>{!data ? "Loading..." : data}</p>
+      </header>
     </div>
   );
 }
-
 
 export default App;

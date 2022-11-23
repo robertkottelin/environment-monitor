@@ -19,7 +19,6 @@ const getTemperatures = () => {
   }) 
 }
 
-
 module.exports = {
   getTemperatures,
 }
