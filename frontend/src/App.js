@@ -36,6 +36,7 @@ function App() {
   return (
     <div className={classes.App}>
        <Header />
+        {merchants ? merchants : 'There is no merchant data available'}
     </div>
   );
 }
