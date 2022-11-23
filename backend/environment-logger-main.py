@@ -36,9 +36,6 @@ def get_database():
     cursor.execute("INSERT INTO TEMPERATURE VALUES (?)", (temp_raw, ))
     conn.commit()
     return conn
-    
-
- 
 
 # Insert to pandas/numpy, perform elastic calculations, AI
 while True:
