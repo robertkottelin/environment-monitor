@@ -1,6 +1,6 @@
-import { makeStyles, Button, Box } from "@material-ui/core";
-import "./App.css";
-import { BrowserRouter, Route } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
+// import "./App.css";
+import Header from "./Header";
 
 const useStyles = makeStyles(() => ({
   App: {
@@ -9,21 +9,16 @@ const useStyles = makeStyles(() => ({
     minHeight: "100vh",
     alignItems: "center",
     alignText: "center",
+    justifyContent: "center",
   },
 }));
 
 function App() {
   const classes = useStyles();
   return (
-    <BrowserRouter>
-      <div className={classes.App}>
-      <Box textAlign='center'>
-        <Button variant='contained'>
-          My button
-        </Button>
-      </Box>
-      </div>
-    </BrowserRouter>
+    <div className={classes.App}>
+       <Header />
+    </div>
   );
 }
 
