@@ -1,14 +1,12 @@
 import { makeStyles } from "@material-ui/core";
-// import "./App.css";
+import "./App.css";
 import Header from "./Header";
 import React, {useState, useEffect} from 'react';
-
 
 const useStyles = makeStyles(() => ({
   App: {
     backgroundColor: "black",
     color: "white",
-    minHeight: "100vh",
     alignItems: "center",
     alignText: "center",
     justifyContent: "center",
@@ -17,26 +15,25 @@ const useStyles = makeStyles(() => ({
 
 function App() {
   const classes = useStyles();
-  // const [merchants, setMerchants] = useState(false);
+  const [temperatures, setTemperatures] = useState(false);
 
-  // useEffect(() => {
-  //   getMerchant();
-  // }, []);
+  useEffect(() => {
+    getTemperatures();
+  }, []);
 
-  // function getMerchant() {
-  //   fetch('http://localhost:3001')
-  //     .then(response => {
-  //       return response.text();
-  //     })
-  //     .then(data => {
-  //       setMerchants(data);
-  //     });
-  // }
+  function getTemperatures() {
+    fetch('http://localhost:3001')
+      .then(response => {
+        return response.text();
+      })
+      .then(data => {
+        setTemperatures(data);
+      });
+  }
 
   return (
     <div className={classes.App}>
-       <Header />
-        {merchants ? merchants : 'There is no merchant data available'}
+      {temperatures ? temperatures : 'There is no temperature data available'}
     </div>
   );
 }
