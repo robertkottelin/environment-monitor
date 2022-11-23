@@ -1,6 +1,8 @@
 import { makeStyles } from "@material-ui/core";
 // import "./App.css";
 import Header from "./Header";
+import React, {useState, useEffect} from 'react';
+
 
 const useStyles = makeStyles(() => ({
   App: {
@@ -15,6 +17,22 @@ const useStyles = makeStyles(() => ({
 
 function App() {
   const classes = useStyles();
+  // const [merchants, setMerchants] = useState(false);
+
+  // useEffect(() => {
+  //   getMerchant();
+  // }, []);
+
+  // function getMerchant() {
+  //   fetch('http://localhost:3001')
+  //     .then(response => {
+  //       return response.text();
+  //     })
+  //     .then(data => {
+  //       setMerchants(data);
+  //     });
+  // }
+
   return (
     <div className={classes.App}>
        <Header />
