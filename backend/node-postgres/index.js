@@ -1,5 +1,6 @@
 const express = require('express');
 const { Client } = require("pg");
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3001
@@ -12,6 +13,12 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 const client = new Client({
   user: 'postgres',
@@ -23,28 +30,21 @@ const client = new Client({
 
 client.connect();
 
-const getTemperatures = () => {
-  return new Promise(function(resolve, reject) {
-    client.query('SELECT * FROM temperatures', (error, results) => {
-      if (error) {
-        reject(error)
-      }
-      resolve(results.rows);
-    })
-  }) 
-}
 
-app.get("/api", (req, res) => {
-  getTemperatures()
-  .then(response => {
-    res.status(200).send(response);
-  })
-  .catch(error => {
-    res.status(500).send(error);
-  })
-  res.json({ message: "Hello from server!" });
+const getTemperatures = (request, response) => {
+  client.query('SELECT * FROM temperatures', (error, results) => {
+    if (error) {
+      throw error;
+    }
+    response.status(200).json(results.rows);
+  });
+};
+
+app.get('/', (request, response) => {
+  response.json({ info: 'Node.js, Express, and Postgres API' });
 });
 
+app.get('/temperatures', getTemperatures);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
