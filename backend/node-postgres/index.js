@@ -30,7 +30,6 @@ const client = new Client({
 
 client.connect();
 
-
 const getTemperatures = (request, response) => {
   client.query('SELECT * FROM temperatures', (error, results) => {
     if (error) {
