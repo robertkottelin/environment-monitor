@@ -12,6 +12,24 @@ function App() {
       .then((data) => setData(data.message));
       // console.log(data.message)
   }, []);
+  
+//   useEffect(() => {
+//     const getAPI = () => {
+//         // Local PostgreSQL Database
+//         const API = 'http://127.0.0.1:5432/';
+//         fetch(API)
+//             .then((response) => {
+//                 console.log(response);
+//                 return response.json();
+//             })
+//             .then((data) => {
+//                 console.log(data);
+//                 setLoading(false);
+//                 setApiData(data);
+//             });
+//     };
+//     getAPI();
+// }, []);
 
   return (
     <div className="App">
