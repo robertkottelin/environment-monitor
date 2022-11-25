@@ -1,6 +1,6 @@
-
 const express = require('express')
 const bodyParser = require('body-parser')
+const { response } = require('express')
 const app = express()
 const port = 3001
 
@@ -20,25 +20,31 @@ const pool = new Pool({
     port: 5432
   });
 
+pool.connect()
+// pool.query('SELECT * FROM temperatures;', (error, results) => {
+//     if (error) {
+//         throw error;
+//     } else {
+//       response.status(200).json(results.rows)
+//     }
+// });
 
 
 const getTemperatures = (request, response) => {
-    pool.connect()
-    pool.query('SELECT * FROM temperatures', (error, results) => {
-        if (error) {
-            throw error;
-        }
-        response.status(200).json(results.rows);
-        console.log('success')
-    });
+  pool.query('SELECT * FROM temperatures;', (error, results) => {
+      if (error) {
+          throw error;
+      }
+      response.status(200).json(results.rows);
+  });
 };
-
 
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
-app.get('/temperatures', db.getTemperatures)
+app.get('/temperatures', getTemperatures)
+console.log()
 
 
 app.listen(port, () => {
