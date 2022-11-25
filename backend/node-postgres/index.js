@@ -12,6 +12,8 @@ app.use(
 )
 
 const Pool = require('pg').Pool
+
+// Replace with .env file
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
@@ -21,14 +23,6 @@ const pool = new Pool({
   });
 
 pool.connect()
-// pool.query('SELECT * FROM temperatures;', (error, results) => {
-//     if (error) {
-//         throw error;
-//     } else {
-//       response.status(200).json(results.rows)
-//     }
-// });
-
 
 const getTemperatures = (request, response) => {
   pool.query('SELECT * FROM temperatures;', (error, results) => {
