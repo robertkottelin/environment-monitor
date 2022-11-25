@@ -11,6 +11,8 @@ import glob
 import time
 import sqlite3
 
+import psycopg2
+
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
 

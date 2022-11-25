@@ -13,7 +13,7 @@ app.use(
 
 const Pool = require('pg').Pool
 
-// Replace with .env file
+// Only for testing, replace with .env file
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
