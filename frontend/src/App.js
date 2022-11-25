@@ -5,26 +5,28 @@ import React, {useState, useEffect} from 'react';
 
 
 function App() {
-  const [data, setData] = React.useState(null);
-  const [temperatures, setTemperatures] = React.useState(null);
+  const [data, setData] = React.useState([]);
 
-  React.useEffect(() => {
-    fetch("/")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
-
-  React.useEffect(() => {
-    fetch("/temperatures")
-      .then((res) => res.json())
-      .then((data) => setTemperatures(data.message));
-  }, []);
+  useEffect(() => {
+    fetch(`/temperatures`)
+     .then((response) => response.json())
+     .then((actualData) => setData(actualData))
+     .catch((err) => {
+      console.log(err.message);
+     });
+   }, []);
   
   return (
     <div className="App">
       <header className="App-header">
-        <p>{!data ? "Loading..." : data}</p>
-        <p>{!temperatures ? "Loading..." : temperatures}</p>
+        <div className="col">
+          <h1>Temperature Data</h1>
+          {data.map(temp => 
+            <div key={temp.ID}>
+              {temp.Celsius} °C
+            </div>
+            )}
+        </div>
       </header>
     </div>
   );
