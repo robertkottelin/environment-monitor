@@ -22,8 +22,8 @@ function App() {
         <div className="col">
           <h1>Temperature Data</h1>
           {data.map(temp => 
-            <div key={temp.ID}>
-              {temp.Celsius} °C
+            <div key={temp.id}>
+              {temp.celsius} °C
             </div>
             )}
         </div>

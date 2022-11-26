@@ -16,7 +16,7 @@ const Pool = require('pg').Pool
 // Only for testing, replace with .env file
 const pool = new Pool({
     user: 'postgres',
-    host: 'localhost',
+    host: '192.168.0.39',
     database: 'temperaturedb',
     password: 'password',
     port: 5432
