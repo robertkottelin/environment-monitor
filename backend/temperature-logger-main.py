@@ -13,6 +13,9 @@ import sqlite3
 
 import psycopg2
 
+from configparser import ConfigParser
+
+
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
 
@@ -42,15 +45,12 @@ def read_temp():
         # temp_f = temp_c * 9.0 / 5.0 + 32.0
         tempid += 1
         return temp_c, tempid
-
-from configparser import ConfigParser
   
 def config(filename='/home/piro/PROJECTS/environment-monitor/backend/database.ini', section='postgresql'):
     # create a parser
     parser = ConfigParser()
     # read config file
     parser.read(filename)
-  
     # get section, default to postgresql
     db = {}
     if parser.has_section(section):
@@ -59,29 +59,7 @@ def config(filename='/home/piro/PROJECTS/environment-monitor/backend/database.in
             db[param[0]] = param[1]
     else:
         raise Exception('Section {0} not found in the {1} file'.format(section, filename))
-  
     return db
-
-# Initialize database connection, write temp to database
-def get_database():
-    try:
-        conn = psycopg2.connect(dbname='temperaturedb',
-                                user='postgres',
-                                password='password',
-                                host='127.0.0.1',
-                                port='5432')
-    except:
-        print('Failed to connect to db')
-    cur = conn.cursor()
-    temp_raw = read_temp()
-    cur.execute('SELECT * FROM temperatures')
-    cur.close()
-    conn.close
-    #SQLite below
-    #cursor.execute("CREATE TABLE IF NOT EXISTS TEMPERATURE(DATA NUMBER);")
-    #cursor.execute("INSERT INTO TEMPERATURE VALUES (?)", (temp_raw, ))
-    #conn.commit()
-    return conn
   
 def connect():
     """ Connect to the PostgreSQL database server """

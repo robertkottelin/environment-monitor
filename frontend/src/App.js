@@ -15,15 +15,23 @@ function App() {
       console.log(err.message);
      });
    }, []);
+   
+   function refreshPage() {
+    window.location.reload(false);
+  }
   
   return (
     <div className="App">
       <header className="App-header">
         <div className="col">
           <h1>Temperature Data</h1>
+          <button
+          onClick={refreshPage}>
+            Refresh
+          </button>
           {data.map(temp => 
             <div key={temp.id}>
-              {temp.celsius} °C
+              {temp.celsius} °C - {temp.created_at}
             </div>
             )}
         </div>

@@ -25,7 +25,7 @@ const pool = new Pool({
 pool.connect()
 
 const getTemperatures = (request, response) => {
-  pool.query('SELECT * FROM temperatures;', (error, results) => {
+  pool.query('SELECT * FROM temperatures ORDER BY temperatures.id DESC;', (error, results) => {
       if (error) {
           throw error;
       }
