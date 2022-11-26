@@ -16,7 +16,7 @@ const Pool = require('pg').Pool
 // Only for testing, replace with .env file
 const pool = new Pool({
     user: 'postgres',
-    host: 'localhost',
+    host: '192.168.0.39',
     database: 'temperaturedb',
     password: 'password',
     port: 5432
@@ -25,7 +25,7 @@ const pool = new Pool({
 pool.connect()
 
 const getTemperatures = (request, response) => {
-  pool.query('SELECT * FROM temperatures;', (error, results) => {
+  pool.query('SELECT * FROM temperatures ORDER BY temperatures.id DESC;', (error, results) => {
       if (error) {
           throw error;
       }
