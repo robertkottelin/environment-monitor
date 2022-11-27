@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const { response } = require('express')
 const app = express()
 const port = 3001
+const hostname = '192.168.0.15';
 
 app.use(bodyParser.json())
 app.use(
@@ -60,6 +61,6 @@ app.get('/currenttemperature', getCurrentTemperature)
 // console.log()
 
 
-app.listen(port, () => {
-  console.log(`App running on port ${port}.`)
+app.listen(port, hostname, () => {
+  console.log(`App running on port http://${hostname}:${port}`)
 })
