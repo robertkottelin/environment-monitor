@@ -7,3 +7,9 @@ Flowchart link: https://lucid.app/lucidchart/7a6a0ca2-b669-4ce4-a853-eb6cf9726ad
 Python code adheres to the PEP8 standard 
 
 Demo: 
+
+
+Todo:
+- Login functionality
+- Filter by date
+- Chart
