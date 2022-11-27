@@ -35,6 +35,8 @@ function App() {
     window.location.reload(false);
   }
 
+  console.log(mychartdata)
+
 
   return (
     <div className="App">
