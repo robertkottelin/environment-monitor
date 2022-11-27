@@ -2,6 +2,7 @@
 import "./App.css";
 // import Header from "./Header";
 import React, {useState, useEffect} from 'react';
+import {Button, Table, TableBody, TableCell, TableHead, TableRow, Typography} from '@mui/material';
 
 
 function App() {
@@ -24,16 +25,33 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="col">
-          <h1>Temperature Data</h1>
-          <button
-          onClick={refreshPage}>
-            Refresh
-          </button>
-          {data.map(temp => 
-            <div key={temp.id}>
-              {temp.celsius} °C - {temp.created_at}
-            </div>
-            )}
+          <Typography variant="h3">
+          Temperature Data
+          </Typography>
+          <Button 
+          variant="contained"
+          onClick={refreshPage}
+          >
+          Refresh
+          </Button>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Celsius (°C)</TableCell>
+                <TableCell>Date (UTC)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map(temp => (
+                <TableRow key={temp.id}>
+                  <TableCell>{temp.celsius}</TableCell>
+                  <TableCell>{temp.created_at}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          {(console.log(data))}
+
         </div>
       </header>
     </div>
