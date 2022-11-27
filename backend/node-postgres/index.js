@@ -34,7 +34,7 @@ const getTemperatures = (request, response) => {
 };
 
 const getChartData = (request, response) => {
-  pool.query('SELECT * FROM temperatures ORDER BY temperatures.id DESC LIMIT 10;', (error, results) => {
+  pool.query('SELECT * FROM temperatures ORDER BY temperatures.id DESC LIMIT 100;', (error, results) => {
       if (error) {
           throw error;
       }

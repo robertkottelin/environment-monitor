@@ -12,4 +12,6 @@ Demo:
 Todo:
 - Login functionality
 - Filter by date
-- Chart
+- Chart :white_check_mark:
+- Alerts
+- Export temperature data

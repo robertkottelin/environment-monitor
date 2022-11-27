@@ -1,12 +1,7 @@
 import "./App.css";
 import React, { useState, useEffect } from 'react';
 import { Button, Table, TableBody, TableCell, TableHead, TableRow, Typography, Paper } from '@mui/material';
-import {
-  ArgumentAxis,
-  ValueAxis,
-  Chart,
-  LineSeries,
-} from '@devexpress/dx-react-chart-material-ui';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 
 function App() {
   const [data, setData] = React.useState([]);
@@ -40,6 +35,7 @@ function App() {
     window.location.reload(false);
   }
 
+
   return (
     <div className="App">
       <header className="App-header">
@@ -48,11 +44,18 @@ function App() {
           Temperature Data
           </Typography>
           <Typography variant="h6">
-            Current Tmperature: 
+            Current Temperature: 
             <div>
             {currentchartdata.map((item,i) => <p key={i}>{item.celsius} °C</p>)}
             </div>
           </Typography>
+          <LineChart width={800} height={200} data={mychartdata} margin={{ top: 5, right: 20, bottom: 0, left: 0 }}>
+            <Line type="monotone" dataKey="celsius" stroke="#8884d8" />
+            <CartesianGrid stroke="#ccc" />
+            <XAxis dataKey="created_at" />
+            <YAxis dataKey="celsius"/>
+            <Tooltip />
+          </LineChart>
           <Button variant="contained" onClick={refreshPage}>Refresh</Button>
           <Table>
             <TableHead>
