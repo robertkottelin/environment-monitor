@@ -41,6 +41,14 @@ const getChartData = (request, response) => {
       response.status(200).json(results.rows);
   });
 };
+const getCurrentTemperature = (request, response) => {
+  pool.query('SELECT * FROM temperatures ORDER BY temperatures.id DESC LIMIT 1;', (error, results) => {
+      if (error) {
+          throw error;
+      }
+      response.status(200).json(results.rows);
+  });
+};
 
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
@@ -48,6 +56,7 @@ app.get('/', (request, response) => {
 
 app.get('/temperatures', getTemperatures)
 app.get('/chartdata', getChartData)
+app.get('/currenttemperature', getCurrentTemperature)
 // console.log()
 
 
