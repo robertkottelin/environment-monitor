@@ -33,12 +33,22 @@ const getTemperatures = (request, response) => {
   });
 };
 
+const getChartData = (request, response) => {
+  pool.query('SELECT * FROM temperatures ORDER BY temperatures.id DESC LIMIT 10;', (error, results) => {
+      if (error) {
+          throw error;
+      }
+      response.status(200).json(results.rows);
+  });
+};
+
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
 app.get('/temperatures', getTemperatures)
-console.log()
+app.get('/chartdata', getChartData)
+// console.log()
 
 
 app.listen(port, () => {

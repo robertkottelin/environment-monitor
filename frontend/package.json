@@ -11,10 +11,12 @@
     "@mui/icons-material": "^5.10.15",
     "@mui/material": "^5.10.15",
     "chart.js": "^4.0.1",
+    "fs": "^0.0.1-security",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.0.1",
     "react-charts": "^3.0.0-beta.50",
     "react-dom": "^18.2.0",
+    "react-google-charts": "^4.0.0",
     "react-json-chart-builder": "^1.13.0",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
@@ -43,5 +45,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   }
 }

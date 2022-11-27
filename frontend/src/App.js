@@ -7,12 +7,17 @@ import { Button, Table, TableBody, TableCell, TableHead, TableRow, Typography, P
 import LineChart from "./components/LineChart";
 import { Data } from "./utils/Data";
 import {CategoryScale} from 'chart.js'; 
-import Chart from 'chart.js/auto';
-Chart.register(CategoryScale);
-
+// import Chart from 'chart.js/auto';
+import { Chart } from "react-google-charts";
+// Chart.register(CategoryScale);
+// const fs = require('fs')
 
 function App() {
+  const temparray = [];
+  temparray.push(["Date", "Celsius"],);
+  console.log(temparray, '1')
   const [data, setData] = React.useState([]);
+  const [mychartdata, setMyChartData] = React.useState([]);
 
   useEffect(() => {
     fetch(`/temperatures`)
@@ -21,14 +26,22 @@ function App() {
      .catch((err) => {
       console.log(err.message);
      });
+     fetch(`/chartdata`)
+     .then((response) => response.json())
+     .then((actualData) => setMyChartData(actualData))
+     .catch((err) => {
+      console.log(err.message);
+     });
+    //  writeChartData(mychartdata);
    }, []);
 
+
   const [chartData, setChartData] = useState({
-    labels: data.map((temp) => temp.created_at), 
+    labels: mychartdata.map((temp) => temp.created_at), 
     datasets: [
       {
         label: "Celsius ",
-        data: data.map((temp) => temp.celsius),
+        data: mychartdata.map((temp) => temp.celsius),
         backgroundColor: [
           "rgba(75,192,192,1)",
           "#ecf0f1",
@@ -42,10 +55,21 @@ function App() {
     ]
   });
 
+  mychartdata.map((item) => temparray.push([item.created_at, item.celsius],));
+  console.log(temparray, '2')
+  // function writeChartData(mychartdata) {
+  //   fs.writeFile('Data.json', mychartdata, err => {
+  //     if (err) {
+  //       throw err
+  //     }
+  //     console.log('JSON data is saved.')
+  //   })
+  // }
 
    function refreshPage() {
     window.location.reload(false);
   }
+
 
   return (
     <div className="App">
@@ -54,8 +78,13 @@ function App() {
           <Typography variant="h3">
           Temperature Data
           </Typography>
-          <LineChart chartData={chartData} />
-          {console.log(chartData)}
+          {/* <LineChart chartData={chartData} /> */}
+          <Chart
+            chartType="Line"
+            loader={<div>Loading Chart</div>}
+            data={temparray}
+          />
+          {/* {console.log(chartData)} */}
           <Button variant="contained" onClick={refreshPage}>Refresh</Button>
           <Table>
             <TableHead>
@@ -75,7 +104,7 @@ function App() {
           </Table>
         </div>
       </header>
-      {(console.log(data))}
+      {/* {(console.log(data))} */}
     </div>
   );
 }

@@ -1,33 +1,39 @@
 // utils/Data.js
-export const Data = [
+export const Data = 
+[
     {
-      id: 1,
-      year: 2016,
-      userGain: 80000,
-      userLost: 823
+        "id": 26996,
+        "celsius": "24.687",
+        "created_at": "2022-11-27T10:07:23.154Z"
     },
     {
-      id: 2,
-      year: 2017,
-      userGain: 45677,
-      userLost: 345
+        "id": 26995,
+        "celsius": "24.625",
+        "created_at": "2022-11-27T10:07:20.202Z"
     },
     {
-      id: 3,
-      year: 2018,
-      userGain: 78888,
-      userLost: 555
+        "id": 26994,
+        "celsius": "24.625",
+        "created_at": "2022-11-27T10:07:17.232Z"
     },
     {
-      id: 4,
-      year: 2019,
-      userGain: 90000,
-      userLost: 4555
+        "id": 26993,
+        "celsius": "24.625",
+        "created_at": "2022-11-27T10:07:14.286Z"
     },
     {
-      id: 5,
-      year: 2020,
-      userGain: 4300,
-      userLost: 234
+        "id": 26992,
+        "celsius": "24.687",
+        "created_at": "2022-11-27T10:07:11.314Z"
+    },
+    {
+        "id": 26991,
+        "celsius": "24.687",
+        "created_at": "2022-11-27T10:07:08.360Z"
+    },
+    {
+        "id": 25997,
+        "celsius": "24.437",
+        "created_at": "2022-11-27T09:18:06.279Z"
     }
-  ];
+];

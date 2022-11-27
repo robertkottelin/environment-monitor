@@ -13,7 +13,7 @@ function LineChart({ chartData }) {
               text: "Temperature Chart"
             },
             legend: {
-              display: false
+              display: true
             }
           }
         }}
