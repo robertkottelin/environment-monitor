@@ -40,8 +40,6 @@ def generate_temperature_data():
             return temperature_data_c
 
 # Connect to the database and create a cursor
-
-
 def create_cursor():
     conn = psycopg2.connect(
         host="localhost",
