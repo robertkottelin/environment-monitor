@@ -4,11 +4,13 @@ import time
 import psycopg2
 import os
 import glob
+# import RPi.GPIO as GPIO  # Uncomment this line if using a Raspberry Pi to control the lamp
 
-use_fake_data = True
-table_content = []
+use_fake_data = True  # Set this to False to use real temperature data
+table_content = []  # List to store the temperature data
 
 if not use_fake_data:
+    # Initialize the temperature sensor
     os.system('modprobe w1-gpio')
     os.system('modprobe w1-therm')
 
@@ -16,16 +18,19 @@ if not use_fake_data:
     device_folder = glob.glob(base_dir + '28*')[0]
     device_file = device_folder + '/w1_slave'
 
-# Read the temperature data from the sensor or generate fake data
-
-# Generate data
 
 def generate_temperature_data():
+    """Generates temperature data.
+
+    If use_fake_data is True, generates a random temperature value between 22 and 24 degrees Celsius.
+    If use_fake_data is False, reads the temperature data from the sensor.
+    """
     if use_fake_data:
         random_temperature_data = random.uniform(22, 24)
         table_content.append(random_temperature_data)
         return random_temperature_data
     else:
+        # Read the temperature data from the sensor
         f = open(device_file, 'r')
         lines = f.readlines()
         f.close()
@@ -39,8 +44,30 @@ def generate_temperature_data():
             table_content.append(temperature_data_c)
             return temperature_data_c
 
-# Connect to the database and create a cursor
+
+def control_lamp(state: str):
+    """Controls a lamp.
+
+    Args:
+        state: The state to set the lamp to. Valid values are 'on' and 'off'.
+    """
+    # Set up the GPIO pin for the relay
+    relay_pin = 17
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(relay_pin, GPIO.OUT)
+
+    if state == 'on':
+        # Turn the relay on
+        GPIO.output(relay_pin, GPIO.HIGH)
+    elif state == 'off':
+        # Turn the relay off
+        GPIO.output(relay_pin, GPIO.LOW)
+    else:
+        raise ValueError(f'Invalid state: {state}')
+
+
 def create_cursor():
+    """Connects to the database and creates a cursor."""
     conn = psycopg2.connect(
         host="localhost",
         database="mydatabase",
@@ -50,12 +77,11 @@ def create_cursor():
     cursor = conn.cursor()
     return conn, cursor
 
-# Insert a row into the temperature table
 
-
-def insert_temp(temp_c, temp_f, cursor):
+def insert_temp(temperature_data_c, temp_f, cursor):
+    """Inserts a row into the temperature table"""
     query = "INSERT INTO temperature (temp_c, temp_f) VALUES (%s, %s)"
-    cursor.execute(query, (temp_c, temp_f))
+    cursor.execute(query, (temperature_data_c, temp_f))
 
 
 # GUI
@@ -78,7 +104,6 @@ window = sg.Window('Temperature Regulation', layout, auto_size_text=True,
 
 # Set an interval for generating and updating data
 interval = 1  # seconds
-
 
 # Run the event loop indefinitely
 while True:
