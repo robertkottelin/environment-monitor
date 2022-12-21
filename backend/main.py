@@ -1,9 +1,13 @@
 import PySimpleGUI as sg
 import random
 import time
+import datetime
 import psycopg2
 import os
 import glob
+import matplotlib
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 # import RPi.GPIO as GPIO  # Uncomment this line if using a Raspberry Pi to control the lamp
 
 use_fake_data = True  # Set this to False to use real temperature data
@@ -45,26 +49,41 @@ def generate_temperature_data():
             return temperature_data_c
 
 
-def control_lamp(state: str):
-    """Controls a lamp.
+# def control_lamp(state: str):
+#     """Controls a lamp.
 
-    Args:
-        state: The state to set the lamp to. Valid values are 'on' and 'off'.
-    """
-    # Set up the GPIO pin for the relay
-    relay_pin = 17
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(relay_pin, GPIO.OUT)
+#     Args:
+#         state: The state to set the lamp to. Valid values are 'on' and 'off'.
+#     """
+#     # Set up the GPIO pin for the relay
+#     relay_pin = 17
+#     GPIO.setmode(GPIO.BCM)
+#     GPIO.setup(relay_pin, GPIO.OUT)
 
-    if state == 'on':
-        # Turn the relay on
-        GPIO.output(relay_pin, GPIO.HIGH)
-    elif state == 'off':
-        # Turn the relay off
-        GPIO.output(relay_pin, GPIO.LOW)
-    else:
-        raise ValueError(f'Invalid state: {state}')
+#     if state == 'on':
+#         # Turn the relay on
+#         GPIO.output(relay_pin, GPIO.HIGH)
+#     elif state == 'off':
+#         # Turn the relay off
+#         GPIO.output(relay_pin, GPIO.LOW)
+#     else:
+#         raise ValueError(f'Invalid state: {state}')
 
+temperature_data = []
+
+def update_figure(figdata):
+    if not isinstance(figdata, float):
+        raise ValueError('figdata must be a float')
+    # Add the new temperature data point to the list
+    temperature_data.append((datetime.datetime.now(), figdata))
+    # Extract the x-axis and y-axis data from the temperature data list
+    x = [point[0] for point in temperature_data]
+    y = [point[1] for point in temperature_data]
+    # Plot the data on the matplotlib figure
+    axes = fig.axes
+    axes[0].plot(x,y,'r-')
+    figure_canvas_agg.draw()
+    figure_canvas_agg.get_tk_widget().pack()
 
 def create_cursor():
     """Connects to the database and creates a cursor."""
@@ -95,12 +114,20 @@ layout = [
         expand_x=True,
         key='-TABLE-'
     )],
+    [sg.Canvas(key = '-CANVAS-')]
 ]
 
 # Create the window
 window = sg.Window('Temperature Regulation', layout, auto_size_text=True,
                    auto_size_buttons=True, resizable=True, grab_anywhere=False, border_depth=5,
                    default_element_size=(30, 10), finalize=True)
+
+# matplotlib
+fig = Figure(figsize = (5,4))
+fig.add_subplot(111).plot([],[])
+figure_canvas_agg = FigureCanvasTkAgg(fig,window['-CANVAS-'].TKCanvas)
+figure_canvas_agg.draw()
+figure_canvas_agg.get_tk_widget().pack()
 
 # Set an interval for generating and updating data
 interval = 1  # seconds
@@ -121,6 +148,7 @@ while True:
     data = generate_temperature_data()
     table_values = window['-TABLE-'].get()
     table_values.insert(0, [len(table_values) + 1, data, timestamp])
+    update_figure(data)
     window['-TABLE-'].update(table_values)
 
 window.close()
