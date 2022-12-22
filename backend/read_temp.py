@@ -1,6 +1,7 @@
 import os
 import glob
 import time
+import math
 
 # Reads raw data from sensor
 def read_temp_raw():
@@ -27,3 +28,9 @@ def read_temperature():
         print(temperature)
         # temp_f = temp_c * 9.0 / 5.0 + 32.0
     return temperature
+
+def oscillating_temp():
+    # Generate a temperature value that oscillates between 21 and 23
+    osc_temp = 21 + 2 / (1 + math.exp(-x))
+    x += 0.1  # Increment x to produce the oscillating effect
+    return osc_temp
