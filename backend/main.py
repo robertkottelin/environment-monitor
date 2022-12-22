@@ -13,6 +13,11 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 use_fake_data = True  # Set this to False to use real temperature data
 table_content = []  # List to store the temperature data
 
+
+def set_temperature(temp_value):
+    set_temperature = temp_value
+    return set_temperature
+
 if not use_fake_data:
     # Initialize the temperature sensor
     os.system('modprobe w1-gpio')
@@ -49,25 +54,25 @@ def generate_temperature_data():
             return temperature_data_c
 
 
-# def control_lamp(state: str):
-#     """Controls a lamp.
+def control_lamp(state: str):
+    """Controls a lamp.
 
-#     Args:
-#         state: The state to set the lamp to. Valid values are 'on' and 'off'.
-#     """
-#     # Set up the GPIO pin for the relay
-#     relay_pin = 17
-#     GPIO.setmode(GPIO.BCM)
-#     GPIO.setup(relay_pin, GPIO.OUT)
+    Args:
+        state: The state to set the lamp to. Valid values are 'on' and 'off'.
+    """
+    # Set up the GPIO pin for the relay
+    relay_pin = 17
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(relay_pin, GPIO.OUT)
 
-#     if state == 'on':
-#         # Turn the relay on
-#         GPIO.output(relay_pin, GPIO.HIGH)
-#     elif state == 'off':
-#         # Turn the relay off
-#         GPIO.output(relay_pin, GPIO.LOW)
-#     else:
-#         raise ValueError(f'Invalid state: {state}')
+    if state == 'on':
+        # Turn the relay on
+        GPIO.output(relay_pin, GPIO.HIGH)
+    elif state == 'off':
+        # Turn the relay off
+        GPIO.output(relay_pin, GPIO.LOW)
+    else:
+        raise ValueError(f'Invalid state: {state}')
 
 temperature_data = []
 
@@ -138,17 +143,22 @@ while True:
     event, values = window.read(timeout=interval*1000)
     if event == sg.WIN_CLOSED:
         break
-    # elif event == 'Set temperature':
-    #     # Update the temperature data with the input value
-    #     temp_value = values['-TEMP-']
-    #     set_temperature_data(temp_value)
+    elif event == 'Set temperature':
+        # Update the temperature data with the input value
+        temp_value = values['-TEMP-']
+        temperature = set_temperature(temp_value)
 
     # Generate and update the data every interval seconds
     timestamp = time.strftime("%m/%d/%Y %H:%M:%S", time.gmtime())
-    data = generate_temperature_data()
+    sensor_data = generate_temperature_data()
     table_values = window['-TABLE-'].get()
-    table_values.insert(0, [len(table_values) + 1, data, timestamp])
-    update_figure(data)
+    table_values.insert(0, [len(table_values) + 1, sensor_data, timestamp])
+    update_figure(sensor_data)
     window['-TABLE-'].update(table_values)
+    
+    if temperature < 22:
+        control_lamp('on')
+    elif temperature > 23:
+        control_lamp('off')
 
 window.close()
