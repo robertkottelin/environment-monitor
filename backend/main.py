@@ -9,7 +9,6 @@ Script reads temperature data from DS18B20 sensors and sends data to postgresql 
 from database import config_database, connect, insert_temperature
 from read_temp import read_temperature
 
-
 def main():
 
     config_database()

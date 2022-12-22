@@ -6,7 +6,7 @@ Flowchart link: https://lucid.app/lucidchart/7a6a0ca2-b669-4ce4-a853-eb6cf9726ad
 
 Python code adheres to the PEP8 standard 
 
-Demo: 
+Demo: Demo-screenshot.png
 
 
 Todo:
@@ -15,3 +15,7 @@ Todo:
 - Chart :white_check_mark:
 - Alerts
 - Export temperature data
+
+    Backend: 
+    - Docker
+    - Kybernetes
