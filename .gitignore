@@ -4,4 +4,6 @@ testing
 # Local Netlify folder
 .netlify
 
+target
+
 build
