@@ -80,7 +80,7 @@ while True:
     table_values.insert(0, [len(table_values) +1, osc_temp, timestamp])
     window['-TABLE-'].update(table_values)
 
-    update_figure(osc_temp)    
+    update_figure(table_values)    
     
     # Insert the temperature into the database
     # insert_temperature(conn, cur, sensor_data)
