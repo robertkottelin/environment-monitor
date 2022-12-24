@@ -31,10 +31,6 @@ def oscillating_temp():
   return osc_temp
 
 def generate_temperature_data():
-    """Generates temperature data.
-    If use_fake_data is True, generates a random temperature value between 22 and 24 degrees Celsius.
-    If use_fake_data is False, reads the temperature data from the sensor.
-    """
     if use_fake_data:
         global x  # Declare x as a global variable
         # Generate a temperature value that oscillates between 21 and 23

@@ -1,26 +1,16 @@
 import time
 import PySimpleGUI as sg
-import math
-import matplotlib.pyplot as plt
 import datetime
-
-# from database import config_database, connect, insert_temperature
-from read_temp import read_temperature
-
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+# from database import config_database, connect, insert_temperature
+from read_temp import read_temperature, generate_sigmoid_fake_data
 
-# Define a global variable to store the value of x
-x = 0
-
-def oscillating_temp():
-  global x  # Declare x as a global variable
-  # Generate a temperature value that oscillates between 21 and 23
-  osc_temp = 21 + 2 / (1 + math.exp(-x))
-  x += 0.1  # Increment x to produce the oscillating effect
-  return osc_temp
+use_fake_data = True  # Set this to False to use real temperature data
+table_content = []  # List to store the temperature data
 
 temperature_data = []
+
 
 def update_figure(figdata):
     if not isinstance(figdata, float):
@@ -32,12 +22,12 @@ def update_figure(figdata):
     y = [point[1] for point in temperature_data]
     # Plot the data on the matplotlib figure
     axes = fig.axes
-    axes[0].plot(x,y,'r-')
-    FigureCanvasTkAgg.draw()
-    FigureCanvasTkAgg.get_tk_widget().pack()
+    axes[0].plot(x, y, 'r-')
+    figure_canvas_agg.draw()
+    figure_canvas_agg.get_tk_widget().pack()
 
 
-# Set up the layout
+# GUI
 layout = [
     [sg.Input(key='-TEMP-')],
     [sg.Button('Set temperature')],
@@ -47,22 +37,20 @@ layout = [
         expand_x=True,
         key='-TABLE-'
     )],
-    # Add a Figure canvas to the layout
     [sg.Canvas(key='-CANVAS-')]
 ]
 
 # Create the window
 window = sg.Window('Temperature Regulation', layout, auto_size_text=True,
-                auto_size_buttons=True, resizable=True, grab_anywhere=False, border_depth=5,
-                default_element_size=(30, 10), finalize=True)
+                   auto_size_buttons=True, resizable=True, grab_anywhere=False, border_depth=5,
+                   default_element_size=(30, 10), finalize=True)
 
-
-fig = Figure(figsize = (5,4))
-fig.add_subplot(111).plot([],[])
-figure_canvas_agg = FigureCanvasTkAgg(fig,window['-CANVAS-'].TKCanvas)
+# matplotlib
+fig = Figure(figsize=(5, 4))
+fig.add_subplot(111).plot([], [])
+figure_canvas_agg = FigureCanvasTkAgg(fig, window['-CANVAS-'].TKCanvas)
 figure_canvas_agg.draw()
 figure_canvas_agg.get_tk_widget().pack()
-
 
 interval = 1  # seconds
 
@@ -75,14 +63,15 @@ while True:
 
     # Generate and update the data every interval seconds
     timestamp = time.strftime("%m/%d/%Y %H:%M:%S", time.gmtime())
-    osc_temp = oscillating_temp()
-    table_values = window['-TABLE-'].get()
-    table_values.insert(0, [len(table_values) +1, osc_temp, timestamp])
-    window['-TABLE-'].update(table_values)
 
-    update_figure(table_values)    
-    
-    # Insert the temperature into the database
-    # insert_temperature(conn, cur, sensor_data)
+    if use_fake_data:
+        data = generate_sigmoid_fake_data()
+    else:
+        data = read_temperature()
+
+    table_values = window['-TABLE-'].get()
+    table_values.insert(0, [len(table_values) + 1, data, timestamp])
+    update_figure(data)
+    window['-TABLE-'].update(table_values)
 
 window.close()
