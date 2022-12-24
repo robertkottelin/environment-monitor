@@ -8,7 +8,7 @@ Python code adheres to the PEP8 standard
 
 # Demo webpage: ![Alt text](Demo-screenshot.png)
 
-# Demo webpdesktop app:
+# Demo webpdesktop app: ![Alt text](Desktop-app-demo.png)
 
 
 
