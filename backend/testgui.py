@@ -1,14 +1,20 @@
 import PySimpleGUI as sg
 import random
 import time
-import psycopg2
+import datetime
 import os
 import glob
+import matplotlib
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import math
+# import RPi.GPIO as GPIO  # Uncomment this line if using a Raspberry Pi to control the lamp
 
-use_fake_data = True
-table_content = []
+use_fake_data = True  # Set this to False to use real temperature data
+table_content = []  # List to store the temperature data
 
 if not use_fake_data:
+    # Initialize the temperature sensor
     os.system('modprobe w1-gpio')
     os.system('modprobe w1-therm')
 
@@ -16,16 +22,27 @@ if not use_fake_data:
     device_folder = glob.glob(base_dir + '28*')[0]
     device_file = device_folder + '/w1_slave'
 
-# Read the temperature data from the sensor or generate fake data
-
-# Generate data
+x=1
+def oscillating_temp():
+  global x  # Declare x as a global variable
+  # Generate a temperature value that oscillates between 21 and 23
+  osc_temp = 21 + 2 / (1 + math.exp(-x))
+  x += 0.1  # Increment x to produce the oscillating effect
+  return osc_temp
 
 def generate_temperature_data():
+    """Generates temperature data.
+    If use_fake_data is True, generates a random temperature value between 22 and 24 degrees Celsius.
+    If use_fake_data is False, reads the temperature data from the sensor.
+    """
     if use_fake_data:
-        random_temperature_data = random.uniform(22, 24)
-        table_content.append(random_temperature_data)
-        return random_temperature_data
+        global x  # Declare x as a global variable
+        # Generate a temperature value that oscillates between 21 and 23
+        osc_temp = 21 + 2 / (1 + math.exp(-x))
+        x += 0.1  # Increment x to produce the oscillating effect
+        return osc_temp
     else:
+        # Read the temperature data from the sensor
         f = open(device_file, 'r')
         lines = f.readlines()
         f.close()
@@ -39,26 +56,21 @@ def generate_temperature_data():
             table_content.append(temperature_data_c)
             return temperature_data_c
 
-# Connect to the database and create a cursor
+temperature_data = []
 
-
-def create_cursor():
-    conn = psycopg2.connect(
-        host="localhost",
-        database="mydatabase",
-        user="user",
-        password="password"
-    )
-    cursor = conn.cursor()
-    return conn, cursor
-
-# Insert a row into the temperature table
-
-
-def insert_temp(temp_c, temp_f, cursor):
-    query = "INSERT INTO temperature (temp_c, temp_f) VALUES (%s, %s)"
-    cursor.execute(query, (temp_c, temp_f))
-
+def update_figure(figdata):
+    if not isinstance(figdata, float):
+        raise ValueError('figdata must be a float')
+    # Add the new temperature data point to the list
+    temperature_data.append((datetime.datetime.now(), figdata))
+    # Extract the x-axis and y-axis data from the temperature data list
+    x = [point[0] for point in temperature_data]
+    y = [point[1] for point in temperature_data]
+    # Plot the data on the matplotlib figure
+    axes = fig.axes
+    axes[0].plot(x,y,'r-')
+    figure_canvas_agg.draw()
+    figure_canvas_agg.get_tk_widget().pack()
 
 # GUI
 # Set up the layout
@@ -71,6 +83,7 @@ layout = [
         expand_x=True,
         key='-TABLE-'
     )],
+    [sg.Canvas(key = '-CANVAS-')]
 ]
 
 # Create the window
@@ -78,9 +91,14 @@ window = sg.Window('Temperature Regulation', layout, auto_size_text=True,
                    auto_size_buttons=True, resizable=True, grab_anywhere=False, border_depth=5,
                    default_element_size=(30, 10), finalize=True)
 
-# Set an interval for generating and updating data
-interval = 1  # seconds
+# matplotlib
+fig = Figure(figsize = (5,4))
+fig.add_subplot(111).plot([],[])
+figure_canvas_agg = FigureCanvasTkAgg(fig,window['-CANVAS-'].TKCanvas)
+figure_canvas_agg.draw()
+figure_canvas_agg.get_tk_widget().pack()
 
+interval = 1  # seconds
 
 # Run the event loop indefinitely
 while True:
@@ -88,16 +106,13 @@ while True:
     event, values = window.read(timeout=interval*1000)
     if event == sg.WIN_CLOSED:
         break
-    # elif event == 'Set temperature':
-    #     # Update the temperature data with the input value
-    #     temp_value = values['-TEMP-']
-    #     set_temperature_data(temp_value)
 
     # Generate and update the data every interval seconds
     timestamp = time.strftime("%m/%d/%Y %H:%M:%S", time.gmtime())
     data = generate_temperature_data()
     table_values = window['-TABLE-'].get()
     table_values.insert(0, [len(table_values) + 1, data, timestamp])
+    update_figure(data)
     window['-TABLE-'].update(table_values)
 
 window.close()
