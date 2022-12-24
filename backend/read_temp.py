@@ -28,10 +28,14 @@ def read_temperature():
         print(temperature)
         # temp_f = temp_c * 9.0 / 5.0 + 32.0
     return temperature
-x=1
+
+x = 1
 def generate_sigmoid_fake_data():
     global x  # Declare x as a global variable
-    # Generate a temperature value that oscillates between 21 and 23
-    osc_temp = 21 + 2 / (1 + math.exp(-x))
-    x += 0.1  # Increment x to produce the oscillating effect
+    # Generate a temperature value that oscillates between min_value and max_value
+    osc_temp = 22 + (23 - 22) * (1 + math.cos(x)) / 2
+    x += 0.01  # Increment x to produce the oscillating effect
     return osc_temp
+
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
