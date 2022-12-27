@@ -1,7 +1,10 @@
 use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow, Button};
+use gtk::{Application, ApplicationWindow, Button, Label};
 
-const APP_ID: &str = "org.gtk_rs.HelloWorld2";
+mod ds18b20;
+mod w1_errors;
+
+const APP_ID: &str = "org.gtk_rs.TemperatureMonitor";
 
 fn main() {
     // Create a new application
@@ -15,9 +18,13 @@ fn main() {
 }
 
 fn build_ui(app: &Application) {
+    // Create a label to display the temperature
+    let label = Label::new(None);
+    label.set_text("Temperature: N/A");
+
     // Create a button with label and margins
     let button = Button::builder()
-        .label("Press me!")
+        .label("Refresh temperature")
         .margin_top(12)
         .margin_bottom(12)
         .margin_start(12)
@@ -25,15 +32,21 @@ fn build_ui(app: &Application) {
         .build();
 
     // Connect to "clicked" signal of `button`
-    button.connect_clicked(move |button| {
-        // Set the label to "Hello World!" after the button has been clicked on
-        button.set_label("Hello World!");
+    button.connect_clicked(move |_| {
+        // Read the temperature from the sensor
+        let sensor = ds18b20::DS18B20::new().unwrap();
+        let temp = sensor.read_temp().unwrap();
+    
+        *label.set_text(&format!("Temperature: {}°C", temp.to_celsius()));
     });
+    
+    
 
     // Create a window
     let window = ApplicationWindow::builder()
         .application(app)
-        .title("My GTK App")
+        .title("Temperature monitor")
+        .child(&label)
         .child(&button)
         .build();
 
