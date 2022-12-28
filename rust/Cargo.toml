@@ -10,5 +10,7 @@ ds18b20 = "0.1.1"
 glib = "0.16.7"
 gtk = { version = "0.5.4", package = "gtk4" }
 one-wire-bus = "0.1.1"
+rand = "0.8.5"
 rppal = "0.14.1"
 thread = "0.1.0"
+wasm-bindgen = "0.2.83"

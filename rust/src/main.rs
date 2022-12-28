@@ -1,55 +1,69 @@
-use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow, Button, Label};
-
+// Import the `ds18b20` and `w1_errors` modules, which provide functions and types
+// for interacting with a DS18B20 temperature sensor
 mod ds18b20;
 mod w1_errors;
 
-const APP_ID: &str = "org.gtk_rs.TemperatureMonitor";
+// Import the `thread_rng` and `Rng` types from the `rand` crate, which provide
+// functions for generating random numbers
+use rand::{thread_rng, Rng};
 
-fn main() {
-    // Create a new application
-    let app = Application::builder().application_id(APP_ID).build();
+// Import the `thread` module from the standard library, which provides functions
+// for creating and working with threads in Rust
+use std::thread;
 
-    // Connect to "activate" signal of `app`
-    app.connect_activate(build_ui);
+// Define a function that generates a random integer in the range [20, 26)
+fn random_int() -> i32 {
+    // Create a thread-local random number generator
+    let mut rng = thread_rng();
 
-    // Run the application
-    app.run();
+    // Use the random number generator to generate a random integer in the specified range
+    rng.gen_range(20..26)
 }
 
-fn build_ui(app: &Application) {
-    // Create a label to display the temperature
-    let label = Label::new(None);
-    label.set_text("Temperature: N/A");
+// Define a constant that controls whether the program should use random data or real data
+// from the temperature sensor. Set it to `true` to use random data, or `false` to use real data.
+static USE_RANDOM_DATA: bool = true;
 
-    // Create a button with label and margins
-    let button = Button::builder()
-        .label("Refresh temperature")
-        .margin_top(12)
-        .margin_bottom(12)
-        .margin_start(12)
-        .margin_end(12)
-        .build();
+// Define a constant that controls whether the program should continue running or not.
+// Set it to `true` to run the program, or `false` to stop the program.
+static RUN_PROGRAM: bool = true;
 
-    // Connect to "clicked" signal of `button`
-    button.connect_clicked(move |_| {
-        // Read the temperature from the sensor
-        let sensor = ds18b20::DS18B20::new().unwrap();
-        let temp = sensor.read_temp().unwrap();
-    
-        *label.set_text(&format!("Temperature: {}°C", temp.to_celsius()));
-    });
-    
-    
+fn main() {
+    // Create a vector to hold the spawned threads
+    let mut threads = Vec::new();
 
-    // Create a window
-    let window = ApplicationWindow::builder()
-        .application(app)
-        .title("Temperature monitor")
-        .child(&label)
-        .child(&button)
-        .build();
+    // Spawn four threads
+    for _ in 0..8 {
+        // Push a new thread onto the vector
+        threads.push(thread::spawn(|| {
+            // Run the loop until the `RUN_PROGRAM` constant is set to `false`
+            while RUN_PROGRAM == true {
+                // Declare a variable to hold the temperature data
+                let temp_random: f32;
 
-    // Present window
-    window.present();
+                // Check whether to use random data or real data
+                if USE_RANDOM_DATA {
+                    // Generate a random temperature value
+                    temp_random = random_int() as f32;
+
+                    // Print the temperature value to the console
+                    println!("Temperature: {:?}", temp_random)
+                } else {
+                    // Create a new instance of the `DS18B20` type from the `ds18b20` module
+                    let sensor = ds18b20::DS18B20::new().unwrap();
+
+                    // Read the temperature from the sensor
+                    let temp = sensor.read_temp().unwrap();
+
+                    // Print the temperature value to the console
+                    println!("Temperature: {:?}", temp)
+                }
+            }
+        }));
+    }
+
+    // Wait for all of the spawned threads to complete
+    for thread in threads {
+        thread.join().unwrap();
+    }
 }
