@@ -2,16 +2,15 @@ mod ds18b20;
 mod w1_errors;
 mod control_lamp;
 use rand::{thread_rng, Rng};
-use std::thread;
+
+static USE_RANDOM_DATA: bool = true;
+static RUN_PROGRAM: bool = true;
+static SET_TEMPERATURE: f64 = 22.0;
 
 fn random_int() -> f64 {
     let mut rng = thread_rng();
     rng.gen_range(20.0..26.0)
 }
-
-static USE_RANDOM_DATA: bool = true;
-static RUN_PROGRAM: bool = true;
-static SET_TEMPERATURE: f64 = 22.0;
 
 fn main() {
     while RUN_PROGRAM == true {
