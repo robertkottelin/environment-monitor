@@ -16,7 +16,6 @@ impl MilliCelsius {
 }
 
 
-
 pub struct DS18B20 {
     w1_id: String
 }

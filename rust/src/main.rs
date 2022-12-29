@@ -3,6 +3,7 @@ mod w1_errors;
 mod control_lamp;
 use rand::{thread_rng, Rng};
 
+// Use random temperature for testing when sensor is disconnected
 static USE_RANDOM_DATA: bool = true;
 static RUN_PROGRAM: bool = true;
 static SET_TEMPERATURE: f64 = 22.0;
@@ -16,6 +17,8 @@ fn random_int() -> f64 {
 fn main() {
     while RUN_PROGRAM == true {
         let temp_random: f64;
+
+        // Use random temperature for testing when sensor is disconnected
         if USE_RANDOM_DATA {
             temp_random = random_int() as f64;
             println!("Temperature: {:?}", temp_random);
@@ -32,6 +35,7 @@ fn main() {
                 }
             }
         } else {
+            // Find sensor and read temmperature
             match ds18b20::DS18B20::new() {
                 Ok(sensor) => {
                     match sensor.read_temp() {
@@ -53,7 +57,7 @@ fn main() {
                         Err(e) => println!("Failed to read temperature: {}", e),
                     }
                 }
-                Err(e) => println!("Failed to create DS18B20 sensor: {}", e),
+                Err(e) => println!("Failed to find DS18B20 sensor: {}", e),
             }
         }
     }
