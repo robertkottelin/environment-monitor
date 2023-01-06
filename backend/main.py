@@ -8,6 +8,7 @@ Script reads temperature data from DS18B20 sensors and sends data to postgresql 
 
 from database import config_database, connect, insert_temperature
 from read_temp import read_temperature
+from control_lamp import control_lamp
 
 def main():
 
@@ -16,6 +17,10 @@ def main():
     while True:
         temperature = read_temperature()
         insert_temperature(conn, cur, temperature)
+        if temperature > 23:
+            control_lamp('off')
+        else:
+            control_lamp('on')
         # time.sleep(1)
             
 if __name__ == '__main__':

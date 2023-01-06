@@ -10,6 +10,8 @@ def control_lamp(state: str):
     relay_pin = 17
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(relay_pin, GPIO.OUT)
+    
+    
 
     if state == 'on':
         # Turn the relay on
