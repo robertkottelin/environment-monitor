@@ -3,14 +3,14 @@ import matplotlib.pyplot as plt
 
 # Constants
 DROPLET_MASS = 0.05  # kg
-DROPLET_TEMP = 20  # Initial temperature of the droplet (Celsius)
+DROPLET_TEMP = 28  # Initial temperature of the droplet (Celsius)
 DROPLET_SURFACE_AREA = math.pi * (0.05 / 2)**2 # Surface area of droplet (m^2)
 TARGET_TEMP = 30  # Target temperature of the droplet (Celsius)
 AMBIENT_TEMP = 20  # Temperature of the environment (Celsius)
-LAMP_POWER = 5 # Power of the lamp (Watts)
+LAMP_POWER = 15 # Power of the lamp (Watts)
 DISTANCE = 1  # Distance between the droplet and the lamp (m)
 LAMP_TEMP = 280 
-LAMP_HEAT_TRANSFER_COEFFICIENT = 2 # Heat transfer coefficient between the droplet and the environment (W/m^2 * K)
+LAMP_HEAT_TRANSFER_COEFFICIENT = 1 # Heat transfer coefficient between the droplet and the environment (W/m^2 * K)
 ENVIRONMENT_HEAT_TRANSFER_COEFFICIENT = 15 # Heat transfer coefficient between the droplet and the environment (W/m^2 * K)
 
 # Simulation parameters
@@ -39,14 +39,14 @@ while time < SIMULATION_TIME:
         # Calculate the new temperature of the droplet
         droplet_temp += (energy_added - energy_lost) / (DROPLET_MASS * 4186)
         
-        if droplet_temp > TARGET_TEMP:
+        if droplet_temp > TARGET_TEMP +0.5:
             lamp_on = False
             cycle_time = time
     else:
         # Calculate the new temperature of the droplet
         droplet_temp -= energy_lost / (DROPLET_MASS * 4186)
         
-        if droplet_temp < TARGET_TEMP:
+        if droplet_temp < TARGET_TEMP -0.5:
             lamp_on = True
             cycle_time = time - cycle_time
     time += TIME_STEP
@@ -54,7 +54,7 @@ while time < SIMULATION_TIME:
     # Append current time and temperature to lists
     time_list.append(time)
     temp_list.append(droplet_temp)
-    # print(droplet_temp, lamp_on)
+    print(droplet_temp, lamp_on, time)
 
 # Print the result
 print("The lamp should have cycle time of ", cycle_time, "seconds.")
