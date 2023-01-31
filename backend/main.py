@@ -13,7 +13,7 @@ def fuzzy_rules(temp_error, rate_of_change):
         output = min(temp_error, rate_of_change)
     elif temp_error < 0 and rate_of_change < 0:
         output = max(temp_error, rate_of_change)
-    return output
+    return
 
 def main():
     config_database()
@@ -33,7 +33,7 @@ def main():
 
         # Use the fuzzy rules to determine the initial output for the heating lamp
         fuzzy_output = fuzzy_rules(temp_error, rate_of_change)
-
+        
         # Use the machine learning model to fine-tune the output
         ml_input = [[temperature, temp_error, rate_of_change]]
         ml_output = ml_model.predict(ml_input)[0]
