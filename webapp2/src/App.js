@@ -103,7 +103,7 @@ const App = () => {
           value={thresholdInputValue}
           onChange={(e) => setThresholdInputValue(e.target.value)}
         />
-        <Button type="submit">Submit new temperature</Button>
+        <Button type="submit">Submit new target temperature for the heating element</Button>
       </form>
   
       { temperature <= thresholdInputValue ? 
