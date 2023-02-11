@@ -85,11 +85,10 @@ const App = () => {
     });
   };
   
-
   
   return (
     <div className={classes.root}>
-      <Typography variant="h4">Temperature:</Typography>
+      <Typography variant="h4">Live temperature:</Typography>
       <Typography variant="h2">{temperature}°C</Typography>
   
       <form onSubmit={handleThresholdSubmit}>
@@ -98,7 +97,7 @@ const App = () => {
           value={thresholdInputValue}
           onChange={(e) => setThresholdInputValue(e.target.value)}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Submit new temperature</Button>
       </form>
     </div>
   );
