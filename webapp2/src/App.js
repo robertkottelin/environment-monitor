@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
   const [temperature, setTemperature] = useState(0.0);
-  const [thresholdInputValue, setThresholdInputValue] = useState('');  
+  const [thresholdInputValue, setThresholdInputValue] = useState('');
+  const [currentTime, setCurrentTime] = useState(new Date().toLocaleString());
   const MQTT_SERVER = '192.168.0.45';
   const MQTT_PORT = 8888;
   const MQTT_TEMPERATURE_TOPIC = 'temperature_channel';
@@ -39,7 +40,9 @@ const App = () => {
   useEffect(() => {
     const clientID = "clientID-" + parseInt(Math.random() * 100);
     const client = new Client(MQTT_SERVER, Number(MQTT_PORT), clientID);
-
+    setInterval(() => {
+      setCurrentTime(new Date().toLocaleString());
+    }, 1000);
     // client.onConnectionLost = (responseObject) => {
     //   console.log('Connection lost:', responseObject.errorMessage);
     // };
@@ -88,7 +91,10 @@ const App = () => {
   
   return (
     <div className={classes.root}>
+      <Typography variant="h4">🕰️ {currentTime}</Typography>
+
       <Typography variant="h4">Live temperature:</Typography>
+
       <Typography variant="h2">{temperature}°C</Typography>
   
       <form onSubmit={handleThresholdSubmit}>
@@ -99,8 +105,17 @@ const App = () => {
         />
         <Button type="submit">Submit new temperature</Button>
       </form>
+  
+      { temperature <= thresholdInputValue ? 
+        <Typography variant="h4">🔥 Heating is currently on</Typography>
+        :
+        <Typography variant="h4">❄️ Heating is currently not on</Typography>
+      }
+
     </div>
   );
+  
+
 };
 
 export default App;
