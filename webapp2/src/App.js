@@ -96,14 +96,18 @@ const App = () => {
       <Typography variant="h4">Live temperature:</Typography>
 
       <Typography variant="h2">{temperature}°C</Typography>
-  
+      <Typography variant="h8">New target temperature for the heating element:</Typography>
+
       <form onSubmit={handleThresholdSubmit}>
         <input
           type="text"
           value={thresholdInputValue}
           onChange={(e) => setThresholdInputValue(e.target.value)}
         />
-        <Button type="submit">Submit new target temperature for the heating element</Button>
+
+        <Button type="submit" variant="contained" color="primary">
+          Submit
+        </Button>
       </form>
   
       { temperature <= thresholdInputValue ? 
