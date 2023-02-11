@@ -11,14 +11,13 @@ GPIO.setmode(GPIO.BCM)
 #Type of PIN - output
 GPIO.setup(relay_pin,GPIO.OUT)
 
- 
 MQTT_SERVER = "localhost"
 MQTT_TEMPERATURE_TOPIC = "temperature_channel"
 MQTT_THRESHOLD_TOPIC = "threshold_channel"
 
 # Initialize the temperature and threshold temperature variables
 temp = 0.0
-threshold_temp = 25.0
+threshold_temp = 29.0
  
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -51,7 +50,9 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
  
+# Connect to both ports 1883 and 8888
 client.connect(MQTT_SERVER, 1883, 60)
+# client.connect(MQTT_SERVER, 8888, 60)
  
 # Blocking call that processes network traffic, dispatches callbacks and
 # handles reconnecting.
