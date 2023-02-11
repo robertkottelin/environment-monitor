@@ -13,7 +13,7 @@ GPIO.setup(relay_pin,GPIO.OUT)
 
  
 MQTT_SERVER = "localhost"
-MQTT_TEMPERATURE_TOPIC = "test_channel"
+MQTT_TEMPERATURE_TOPIC = "temperature_channel"
 MQTT_THRESHOLD_TOPIC = "threshold_channel"
 
 # Initialize the temperature and threshold temperature variables
