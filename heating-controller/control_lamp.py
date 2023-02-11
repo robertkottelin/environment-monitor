@@ -1,23 +1,25 @@
 import RPi.GPIO as GPIO
-
-def control_lamp(state: str):
-    """Controls a lamp.
-
-    Args:
-        state: The state to set the lamp to. Valid values are 'on' and 'off'.
-    """
-    # Set up the GPIO pin for the relay
-    relay_pin = 17
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(relay_pin, GPIO.OUT)
-    
-    
-
-    if state == 'on':
-        # Turn the relay on
-        GPIO.output(relay_pin, GPIO.HIGH)
-    elif state == 'off':
-        # Turn the relay off
-        GPIO.output(relay_pin, GPIO.LOW)
-    else:
-        raise ValueError(f'Invalid state: {state}')
+import time
+ 
+# PIN connected to IN1
+relay_pin = 23
+ 
+# Set mode BCM
+GPIO.setmode(GPIO.BCM)
+ 
+#Type of PIN - output
+GPIO.setup(relay_pin,GPIO.OUT)
+ 
+try:
+        while True:
+                #set low
+                print ("Setting low - LAMP ON")
+                GPIO.output (relay_pin,GPIO.LOW)
+                time.sleep(2)
+                #set high
+                print ("Setting high - LAMP OFF")
+                GPIO.output (relay_pin, GPIO.HIGH)
+                time.sleep(2)
+except KeyboardInterrupt:
+        GPIO.cleanup()
+        print ("Bye")
