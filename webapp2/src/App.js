@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Client } from 'paho-mqtt';
+import { Message , Client } from 'paho-mqtt';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
@@ -74,15 +74,10 @@ const App = () => {
     client.connect({
       onSuccess: () => {
         console.log('Connected to MQTT broker');
-        client.publish(MQTT_THRESHOLD_TOPIC, thresholdInputValue, function(error) {
-
-          if (error) {
-            console.error("Error publishing message: ", error);
-          } else {
-            console.log("Message published successfully.");
-          }
-          client.disconnect();
-        });
+        const message = new Message(thresholdInputValue);
+        message.destinationName = MQTT_THRESHOLD_TOPIC;
+        client.send(message);
+        console.log("Message sent successfully.");
       },
       onFailure: (error) => {
         console.log('Failed to connect to MQTT broker', error);
@@ -90,6 +85,7 @@ const App = () => {
     });
   };
   
+
   
   return (
     <div className={classes.root}>
