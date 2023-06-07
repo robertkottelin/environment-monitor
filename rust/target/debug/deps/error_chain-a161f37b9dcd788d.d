@@ -1,0 +1,9 @@
+C:\Users\rober\Documents\GitHub\environment-monitor\rust\target\debug\deps\error_chain-a161f37b9dcd788d.rmeta: C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\lib.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\impl_error_chain_kind.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\error_chain.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\quick_main.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\example_generated.rs
+
+C:\Users\rober\Documents\GitHub\environment-monitor\rust\target\debug\deps\error_chain-a161f37b9dcd788d.d: C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\lib.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\impl_error_chain_kind.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\error_chain.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\quick_main.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\example_generated.rs
+
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\lib.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\impl_error_chain_kind.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\error_chain.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\quick_main.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\error-chain-0.11.0\src\example_generated.rs:

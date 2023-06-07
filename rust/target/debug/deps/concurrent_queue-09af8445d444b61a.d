@@ -1,0 +1,9 @@
+C:\Users\rober\Documents\GitHub\environment-monitor\rust\target\debug\deps\concurrent_queue-09af8445d444b61a.rmeta: C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\lib.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\bounded.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\single.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\unbounded.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\sync.rs
+
+C:\Users\rober\Documents\GitHub\environment-monitor\rust\target\debug\deps\concurrent_queue-09af8445d444b61a.d: C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\lib.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\bounded.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\single.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\unbounded.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\sync.rs
+
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\lib.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\bounded.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\single.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\unbounded.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\concurrent-queue-2.2.0\src\sync.rs:

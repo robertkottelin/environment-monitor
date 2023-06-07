@@ -1,0 +1,12 @@
+C:\Users\rober\Documents\GitHub\environment-monitor\rust\target\debug\deps\net2-0b4b0c7776e6ef82.rmeta: C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\lib.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\tcp.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\udp.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\socket.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\ext.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\utils.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\sys\windows\mod.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\sys\windows\impls.rs
+
+C:\Users\rober\Documents\GitHub\environment-monitor\rust\target\debug\deps\net2-0b4b0c7776e6ef82.d: C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\lib.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\tcp.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\udp.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\socket.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\ext.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\utils.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\sys\windows\mod.rs C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\sys\windows\impls.rs
+
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\lib.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\tcp.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\udp.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\socket.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\ext.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\utils.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\sys\windows\mod.rs:
+C:\Users\rober\.cargo\registry\src\index.crates.io-6f17d22bba15001f\net2-0.2.38\src\sys\windows\impls.rs:
